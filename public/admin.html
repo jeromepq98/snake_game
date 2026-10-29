@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Snake Arena — Admin</title>
+  <meta name="theme-color" content="#0a0f1a" />
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+<div id="admin-app">
+
+  <!-- login -->
+  <section id="admin-login" class="admin-screen">
+    <div class="nick-card">
+      <h1 style="font-size:1.5rem">Snake Arena Admin</h1>
+      <p class="tagline">Moderation and monitoring dashboard.</p>
+      <div class="nick-input-row">
+        <input id="admin-token" type="password" placeholder="Admin token" autocomplete="off" />
+      </div>
+      <p id="admin-login-error" class="field-error"></p>
+      <button id="admin-login-btn" class="btn btn-primary btn-xl">Sign in</button>
+      <p class="guest-note">Access requires the server's ADMIN_TOKEN. All actions are written to the audit log. No player IPs or session tokens are ever displayed here.</p>
+    </div>
+  </section>
+
+  <!-- dashboard -->
+  <section id="admin-dash" class="admin-screen hidden">
+    <div class="menu-topbar">
+      <span class="brand">Snake Arena Admin</span>
+      <span id="admin-status" class="live-pill">…</span>
+      <div class="topbar-actions">
+        <button id="admin-refresh" class="btn btn-sm btn-outline">Refresh</button>
+        <button id="admin-logout" class="btn btn-sm btn-ghost">Sign out</button>
+      </div>
+    </div>
+
+    <div class="admin-tabs">
+      <button data-tab="overview" class="active">Overview</button>
+      <button data-tab="players">Players</button>
+      <button data-tab="rooms">Rooms</button>
+      <button data-tab="reports">Reports</button>
+      <button data-tab="bans">Bans</button>
+      <button data-tab="audit">Audit log</button>
+      <button data-tab="suspicious">Suspicious scores</button>
+    </div>
+
+    <div class="admin-body">
+      <div id="tab-overview" class="admin-tab">
+        <div id="metric-cards" class="metric-grid"></div>
+        <h2 class="admin-h2">Players by mode</h2>
+        <div id="by-mode"></div>
+      </div>
+
+      <div id="tab-players" class="admin-tab hidden">
+        <p class="hint">Everyone currently connected to a room. Kick disconnects immediately; ban also blocks future sessions for this guest ID.</p>
+        <div id="players-table"></div>
+      </div>
+
+      <div id="tab-rooms" class="admin-tab hidden">
+        <div id="rooms-table"></div>
+      </div>
+
+      <div id="tab-reports" class="admin-tab hidden">
+        <div class="admin-subtabs" id="report-status-tabs">
+          <button data-status="" class="active">All</button>
+          <button data-status="open">Open</button>
+          <button data-status="reviewed">Reviewed</button>
+          <button data-status="actioned">Actioned</button>
+          <button data-status="dismissed">Dismissed</button>
+        </div>
+        <div id="reports-table"></div>
+      </div>
+
+      <div id="tab-bans" class="admin-tab hidden">
+        <h2 class="admin-h2">Issue a ban</h2>
+        <div class="ban-form">
+          <input id="ban-guest" placeholder="guest id (g_…)" />
+          <input id="ban-minutes" type="number" min="0" placeholder="minutes (0 = permanent)" />
+          <input id="ban-reason" placeholder="reason" />
+          <button id="ban-create" class="btn btn-danger btn-sm">Ban guest</button>
+        </div>
+        <h2 class="admin-h2">Active bans</h2>
+        <div id="bans-table"></div>
+      </div>
+
+      <div id="tab-audit" class="admin-tab hidden">
+        <div class="admin-subtabs">
+          <select id="audit-action">
+            <option value="">All actions</option>
+            <option value="report_created">report_created</option>
+            <option value="report_status">report_status</option>
+            <option value="kick">kick</option>
+            <option value="ban">ban</option>
+            <option value="unban">unban</option>
+            <option value="head_set">head_set</option>
+            <option value="head_clear">head_clear</option>
+            <option value="head_remove">head_remove</option>
+          </select>
+          <button id="audit-prev" class="btn btn-sm">&larr; Newer</button>
+          <button id="audit-next" class="btn btn-sm">Older &rarr;</button>
+        </div>
+        <div id="audit-table"></div>
+      </div>
+
+      <div id="tab-suspicious" class="admin-tab hidden">
+        <p class="hint">Leaderboard entries flagged by the anti-cheat heuristic (impossible score relative to survival time). Review before acting.</p>
+        <div id="suspicious-table"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast-container" aria-live="polite"></div>
+</div>
+
+<script src="/js/util.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

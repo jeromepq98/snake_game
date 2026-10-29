@@ -1,0 +1,28 @@
+{
+  "name": "snake-arena",
+  "version": "1.0.0",
+  "description": "Real-time multiplayer Snake Arena. Nickname-only guest play — no account required.",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "migrate": "node server/db/migrate.js",
+    "icons": "node scripts/generate-icons.js",
+    "bots": "node scripts/bot-client.js",
+    "test:engine": "node tests/engine-test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.7.5"
+  },
+  "license": "MIT"
+}

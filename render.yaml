@@ -1,0 +1,37 @@
+# Render deployment descriptor for Snake Arena.
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: snake-arena
+    runtime: node
+    plan: starter
+    buildCommand: npm install && npm run icons
+    startCommand: npm start
+    healthCheckPath: /api/healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Render terminates TLS in front of the app, so rate limits must key on
+      # the X-Forwarded-For hop rather than the proxy's address.
+      - key: TRUST_PROXY
+        value: "1"
+      - key: APP_SECRET
+        generateValue: true
+      - key: ADMIN_TOKEN
+        sync: false # set manually in the Render dashboard
+      - key: DATABASE_URL
+        sync: false # Aiven MySQL service URI, e.g. mysql://avnadmin:...@....aivencloud.com:.../defaultdb?ssl-mode=REQUIRED
+      - key: DB_CA
+        sync: false # @ca.pem after uploading ca.pem via Secret Files, or inline PEM
+      - key: MAX_PLAYERS_PER_ROOM
+        value: "20"
+      - key: MAX_SPECTATORS_PER_ROOM
+        value: "50"
+      - key: VOICE_CAP
+        value: "8"
+      - key: SESSION_TTL_HOURS
+        value: "168"
+      - key: RETENTION_DAYS
+        value: "30"
+      - key: ICE_SERVERS
+        value: '[{"urls":["stun:stun.l.google.com:19302"]}]'

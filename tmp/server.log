@@ -1,0 +1,70 @@
+[05:14:02.130] [warn] DATABASE_URL not set — running with in-memory storage. Leaderboards and statistics will reset on restart.
+[05:14:02.157] [info] 
+[05:14:02.157] [info]   Snake Arena — nickname-only multiplayer
+[05:14:02.157] [info]   http://localhost:3000
+[05:14:02.157] [info]   storage: in-memory (no DATABASE_URL)
+[05:14:02.158] [info]   admin dashboard: /admin (enabled)
+[05:14:02.158] [info] 
+[05:15:18.112] [info] guest MapTester connected (g_1a01121f…)
+[05:16:59.834] [info] guest disconnected (transport close)
+[05:17:00.409] [info] guest MapTester connected (g_1a01121f…)
+[05:19:02.951] [info] guest jerome connected (g_d268cd96…)
+[05:20:34.881] [info] achievement first_bite unlocked by g_1a01121ff5fefffad4a9c5ae
+[05:20:34.884] [info] achievement first_bite unlocked by g_d268cd965fdbd89b3820eae4
+[05:20:34.885] [info] achievement score_50 unlocked by g_d268cd965fdbd89b3820eae4
+[05:21:03.844] [info] guest disconnected (transport close)
+[05:21:12.083] [info] guest disconnected (transport close)
+[05:22:42.191] [info] achievement score_50 unlocked by g_1a01121ff5fefffad4a9c5ae
+[08:14:04.278] [info] guest Adder0 connected (g_6fc49dda…)
+[08:14:04.321] [info] guest Boa1 connected (g_0a3165b7…)
+[08:14:04.323] [info] guest Cobra2 connected (g_d14fe20a…)
+[08:14:04.338] [info] guest Mamba3 connected (g_dda09828…)
+[08:14:04.342] [info] guest Viper4 connected (g_b5a482cf…)
+[08:14:04.343] [info] guest Rattler5 connected (g_87b676fe…)
+[08:14:04.358] [info] guest Python6 connected (g_a54b5e72…)
+[08:14:04.359] [info] guest Anaconda7 connected (g_355a8c43…)
+[08:14:04.361] [info] guest Taipan8 connected (g_ef4a8e86…)
+[08:14:04.362] [info] guest Krait9 connected (g_779402d8…)
+[08:14:18.201] [info] guest jerome connected (g_d268cd96…)
+[08:14:28.761] [info] guest disconnected (transport close)
+[08:15:11.147] [info] guest jerome connected (g_d268cd96…)
+[08:15:21.956] [info] guest disconnected (client namespace disconnect)
+[08:15:21.958] [info] guest disconnected (client namespace disconnect)
+[08:15:21.959] [info] guest disconnected (client namespace disconnect)
+[08:15:21.962] [info] guest disconnected (client namespace disconnect)
+[08:15:21.963] [info] guest disconnected (client namespace disconnect)
+[08:15:21.964] [info] guest disconnected (client namespace disconnect)
+[08:15:21.965] [info] guest disconnected (client namespace disconnect)
+[08:15:21.966] [info] guest disconnected (client namespace disconnect)
+[08:15:21.966] [info] guest disconnected (client namespace disconnect)
+[08:15:21.967] [info] guest disconnected (client namespace disconnect)
+[08:16:52.073] [info] achievement first_bite unlocked by g_6fc49dda6c6bb86e31d4f3b0
+[08:16:52.073] [info] achievement first_kill unlocked by g_6fc49dda6c6bb86e31d4f3b0
+[08:16:52.073] [info] achievement first_bite unlocked by g_0a3165b7a8ca6ba457413133
+[08:16:52.073] [info] achievement score_50 unlocked by g_0a3165b7a8ca6ba457413133
+[08:16:52.073] [info] achievement first_kill unlocked by g_0a3165b7a8ca6ba457413133
+[08:16:52.073] [info] achievement first_bite unlocked by g_d14fe20a6127b50129a09abf
+[08:16:52.074] [info] achievement first_kill unlocked by g_d14fe20a6127b50129a09abf
+[08:16:52.074] [info] achievement first_bite unlocked by g_dda09828679e94b232284360
+[08:16:52.074] [info] achievement score_50 unlocked by g_dda09828679e94b232284360
+[08:16:52.074] [info] achievement first_kill unlocked by g_dda09828679e94b232284360
+[08:16:52.074] [info] achievement first_bite unlocked by g_b5a482cf5c48c8aae24eee6b
+[08:16:52.074] [info] achievement score_50 unlocked by g_b5a482cf5c48c8aae24eee6b
+[08:16:52.074] [info] achievement first_kill unlocked by g_b5a482cf5c48c8aae24eee6b
+[08:16:52.074] [info] achievement first_bite unlocked by g_87b676feb2eba7b5603c5cc5
+[08:16:52.075] [info] achievement score_50 unlocked by g_87b676feb2eba7b5603c5cc5
+[08:16:52.075] [info] achievement first_kill unlocked by g_87b676feb2eba7b5603c5cc5
+[08:16:52.075] [info] achievement first_bite unlocked by g_a54b5e725fb58d35da363383
+[08:16:52.075] [info] achievement score_50 unlocked by g_a54b5e725fb58d35da363383
+[08:16:52.075] [info] achievement first_kill unlocked by g_a54b5e725fb58d35da363383
+[08:16:52.075] [info] achievement first_bite unlocked by g_355a8c435e4a6bcc104a4252
+[08:16:52.075] [info] achievement first_kill unlocked by g_355a8c435e4a6bcc104a4252
+[08:16:52.076] [info] achievement first_bite unlocked by g_ef4a8e860ab1580e845f96fe
+[08:16:52.076] [info] achievement score_50 unlocked by g_ef4a8e860ab1580e845f96fe
+[08:16:52.076] [info] achievement first_kill unlocked by g_ef4a8e860ab1580e845f96fe
+[08:16:52.076] [info] achievement first_bite unlocked by g_779402d82c86cb1b3431d50b
+[08:16:52.076] [info] achievement score_50 unlocked by g_779402d82c86cb1b3431d50b
+[08:16:52.076] [info] achievement first_kill unlocked by g_779402d82c86cb1b3431d50b
+[08:22:36.390] [info] guest disconnected (ping timeout)
+[08:22:43.110] [info] guest jerome connected (g_d268cd96…)
+[08:23:30.546] [info] guest disconnected (transport close)

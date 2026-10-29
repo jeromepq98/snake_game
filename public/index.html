@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Snake Arena — free multiplayer snake, no account needed</title>
+  <meta name="description" content="Real-time multiplayer Snake Arena. Pick a nickname and play instantly — no sign-up. Rooms, power-ups, voice chat, leaderboards." />
+  <meta name="theme-color" content="#0a0f1a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Snake Arena" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div id="app">
+
+  <div id="connection-banner" class="hidden">Reconnecting…</div>
+
+  <!-- ============ nickname screen ============ -->
+  <section id="screen-nickname" class="screen active">
+    <div class="nick-card">
+      <div class="logo-row">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <rect x="4" y="4" width="56" height="56" rx="14" fill="#0e1626" stroke="#2fbf4f" stroke-width="3"/>
+          <rect x="18" y="22" width="8" height="8" fill="#22c55e"/>
+          <rect x="26" y="22" width="8" height="8" fill="#22c55e"/>
+          <rect x="34" y="22" width="8" height="8" fill="#22c55e"/>
+          <rect x="34" y="30" width="8" height="8" fill="#16a34a"/>
+          <rect x="26" y="30" width="8" height="8" fill="#16a34a"/>
+          <rect x="18" y="30" width="8" height="8" fill="#16a34a"/>
+          <rect x="18" y="38" width="8" height="8" fill="#22c55e"/>
+          <rect x="24" y="14" width="4" height="4" fill="#fbbf24"/>
+        </svg>
+        <h1>Snake Arena</h1>
+      </div>
+      <p class="tagline">Real-time multiplayer snake. No account — just a nickname.</p>
+
+      <div class="nick-input-row">
+        <input id="nick-input" maxlength="16" placeholder="Your nickname" autocomplete="off" spellcheck="false" enterkeyhint="go" />
+        <button id="nick-dice" class="btn" title="Random nickname" aria-label="Random nickname">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="8.5" cy="8.5" r="1.7" fill="currentColor"/>
+            <circle cx="15.5" cy="15.5" r="1.7" fill="currentColor"/>
+            <circle cx="15.5" cy="8.5" r="1.7" fill="currentColor"/>
+            <circle cx="8.5" cy="15.5" r="1.7" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <p id="nick-error" class="field-error"></p>
+      <button id="nick-start" class="btn btn-primary btn-xl">Play now</button>
+
+      <p class="guest-note">
+        No sign-up, no email. Your nickname is a display name, not a verified identity — anyone may type the same one.
+        Guests are told apart by an anonymous session stored in this browser. Clearing site data or switching devices
+        will lose your stats, skins and unlocks.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ menu screen ============ -->
+  <section id="screen-menu" class="screen">
+    <div class="menu-topbar">
+      <span class="brand">Snake Arena</span>
+      <span id="live-pill" class="live-pill">… online</span>
+      <div class="topbar-actions">
+        <button id="btn-leaderboard" class="btn btn-sm btn-outline">Leaderboards</button>
+        <button id="btn-settings" class="btn btn-sm btn-ghost">Settings</button>
+        <span id="menu-nick" class="nick-chip"></span>
+      </div>
+    </div>
+
+    <div class="menu-body">
+      <div class="menu-col">
+        <h2>Game mode</h2>
+        <div id="mode-cards" class="card-grid"></div>
+
+        <h2>Map</h2>
+        <div id="map-cards" class="card-grid"></div>
+
+        <h2>Your snake</h2>
+        <div id="skin-row" class="skin-row"></div>
+        <p class="hint">Locked skins unlock through achievements. Progress is per-device (guest session).</p>
+      </div>
+
+      <div class="menu-col">
+        <h2>Quick play</h2>
+        <button id="btn-play" class="btn btn-primary btn-xl">Enter arena</button>
+        <p class="hint" style="margin: 0.5rem 0">or</p>
+        <button id="btn-spectate" class="btn btn-xl">Spectate a match</button>
+        <p id="menu-error" class="field-error"></p>
+
+        <h2>Private room</h2>
+        <div class="room-row">
+          <input id="room-code-input" maxlength="6" placeholder="CODE" autocomplete="off" spellcheck="false" />
+          <button id="btn-join-code" class="btn">Join</button>
+        </div>
+        <button id="btn-create-private" class="btn btn-outline">Create private room</button>
+        <p id="private-hint" class="hint hidden"></p>
+
+        <h2>Session</h2>
+        <button id="btn-rename" class="btn btn-sm">Change nickname</button>
+        <button id="btn-forget" class="btn btn-sm btn-danger">Forget me on this device</button>
+        <p class="hint">Stats are saved anonymously server-side while your session is valid. “Forget me” clears this browser’s session token only.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ leaderboard screen ============ -->
+  <section id="screen-leaderboard" class="screen">
+    <div class="menu-topbar">
+      <button id="btn-lb-back" class="btn btn-sm btn-ghost">&larr; Back</button>
+      <span class="brand">Leaderboards</span>
+      <span class="live-pill" id="lb-period-note">nicknames shown are display names</span>
+    </div>
+    <div class="lb-body">
+      <ul id="lb-tabs" class="nav-tabs">
+        <li><button data-period="alltime" class="active">All-time</button></li>
+        <li><button data-period="weekly">Weekly</button></li>
+        <li><button data-period="daily">Daily</button></li>
+      </ul>
+      <div id="lb-body">
+        <p class="lb-empty">Loading…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ game screen ============ -->
+  <section id="screen-game" class="screen">
+    <canvas id="game-canvas"></canvas>
+
+    <div id="hud">
+      <div class="hud-top-left">
+        <div class="stat-big" id="hud-score">0</div>
+        <div class="stat-sub">score</div>
+        <div class="stat-row"><span id="hud-kills">0</span> kills · <span id="hud-len">5</span> len · <span id="hud-alive">0:00</span></div>
+      </div>
+
+      <div class="hud-top-right">
+        <span class="room-chip" id="room-chip">…</span>
+        <button id="btn-leave" class="btn btn-sm btn-danger">Leave</button>
+      </div>
+
+      <div class="hud-panel">
+        <h3>Leaderboard</h3>
+        <ul id="hud-lb-list"></ul>
+      </div>
+
+      <div id="kill-feed" class="kill-feed"></div>
+
+      <div id="chat-panel" class="chat-panel collapsed">
+        <button id="chat-toggle" class="chat-toggle">Chat &#9662;</button>
+        <div id="chat-messages"></div>
+        <form id="chat-form" autocomplete="off">
+          <input id="chat-input" maxlength="200" placeholder="Message…" />
+          <button class="btn btn-sm" type="submit">Send</button>
+        </form>
+      </div>
+
+      <div id="voice-panel" class="voice-panel hidden">
+        <div class="voice-head">
+          <button id="voice-toggle" class="btn btn-sm">Join voice</button>
+          <button id="voice-leave" class="btn btn-sm btn-danger hidden">Leave</button>
+        </div>
+        <div id="voice-controls" class="hidden">
+          <div class="vc-row">
+            <button id="voice-mute" class="btn">Mute</button>
+            <button id="voice-ptt" class="btn">PTT</button>
+          </div>
+          <div class="vc-row"><button id="voice-proximity" class="btn">Proximity: off</button></div>
+          <input type="range" id="voice-volume" min="0" max="100" value="80" aria-label="Output volume" />
+          <div id="voice-peers"></div>
+        </div>
+      </div>
+
+      <canvas id="minimap" width="150" height="100" aria-label="Minimap"></canvas>
+
+      <div id="joystick" class="joystick"><div id="joystick-knob"></div></div>
+      <button id="boost-btn" class="touch-btn hidden" aria-label="Boost">BOOST</button>
+
+      <div id="overlay-center" class="overlay-center hidden">
+        <div class="overlay-card" id="overlay-card"></div>
+      </div>
+
+      <div id="round-banner" class="round-banner hidden"></div>
+
+      <div id="spectate-controls" class="hidden">
+        <span>Spectating</span>
+        <button id="spectate-prev" class="btn btn-sm" aria-label="Previous player">&lsaquo;</button>
+        <span id="spectate-name">—</span>
+        <button id="spectate-next" class="btn btn-sm" aria-label="Next player">&rsaquo;</button>
+        <button id="spectate-exit" class="btn btn-sm btn-ghost">Exit</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- toasts -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ============ settings modal ============ -->
+  <div id="modal-settings" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <h2>Settings</h2>
+      <div class="form-row">
+        <label for="settings-nick">Nickname</label>
+        <input id="settings-nick" maxlength="16" autocomplete="off" />
+        <p id="settings-nick-error" class="field-error"></p>
+      </div>
+      <div class="form-row">
+        <label>Snake head picture</label>
+        <div class="head-editor">
+          <div class="head-preview">
+            <img id="head-preview-img" class="hidden" alt="Custom snake head preview" />
+            <span id="head-preview-empty">Default head</span>
+          </div>
+          <div class="head-editor-actions">
+            <input type="file" id="head-file" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp" class="hidden" />
+            <button id="head-upload" class="btn btn-sm" type="button">Choose picture…</button>
+            <button id="head-remove" class="btn btn-sm btn-ghost hidden" type="button">Remove</button>
+            <p id="head-status" class="hint" aria-live="polite"></p>
+          </div>
+        </div>
+        <p class="hint">Pictures are center-cropped to 128×128 and visible to other players in your room. The picture is tied to this guest session on this device. Only upload images you have the right to use.</p>
+      </div>
+      <div class="form-row"><label><input type="checkbox" id="settings-voice-enable" checked /> Enable voice chat (WebRTC, optional)</label></div>
+      <div class="form-row"><label><input type="checkbox" id="settings-ptt" /> Push-to-talk (hold <kbd>V</kbd>)</label></div>
+      <div class="form-row"><label><input type="checkbox" id="settings-proximity" /> Proximity voice — only hear nearby players</label></div>
+      <div class="form-row">
+        <label for="settings-volume">Output volume</label>
+        <input type="range" id="settings-volume" min="0" max="100" value="80" />
+      </div>
+      <p class="controls-help">
+        <kbd>&uarr;&darr;&larr;&rarr;</kbd> or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> steer &nbsp;·&nbsp;
+        <kbd>Space</kbd>/<kbd>Shift</kbd> boost &nbsp;·&nbsp; <kbd>Enter</kbd> chat &nbsp;·&nbsp; <kbd>Esc</kbd> leave room
+      </p>
+      <div class="modal-actions">
+        <button id="settings-cancel" class="btn">Cancel</button>
+        <button id="settings-save" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ report modal ============ -->
+  <div id="modal-report" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <h2>Report player</h2>
+      <p class="hint" id="report-target"></p>
+      <div class="form-row">
+        <label for="report-reason">Reason</label>
+        <select id="report-reason">
+          <option value="abuse">Verbal abuse / harassment</option>
+          <option value="spam">Spam or flooding</option>
+          <option value="cheating">Suspected cheating</option>
+          <option value="inappropriate">Inappropriate content</option>
+          <option value="voice">Voice chat abuse</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="report-details">Details (optional)</label>
+        <textarea id="report-details" rows="3" maxlength="500"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button id="report-cancel" class="btn">Cancel</button>
+        <button id="report-block" class="btn">Block &amp; report</button>
+        <button id="report-send" class="btn btn-danger">Report</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/net.js"></script>
+<script src="/js/renderer.js"></script>
+<script src="/js/input.js"></script>
+<script src="/js/voice.js"></script>
+<script src="/js/game.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
